@@ -22,10 +22,9 @@ pipeline {
             steps {
               withDockerRegistry(credentialsId: 'dockerhub_cred', url: 'https://index.docker.io/v1/') {
                     sh script: 'cd  $WORKSPACE'
-                    sh script: 'docker build --file Dockerfile --tag docker.io/DOCKER_IMAGE_NAME:$BUILD_NUMBER .'
-                    sh script: 'docker push docker.io/DOCKER_IMAGE_NAME:$BUILD_NUMBER'
+                    sh script: 'docker build --file Dockerfile --tag docker.io/elchen8923/train-schedule:$BUILD_NUMBER .'
+                    sh script: 'docker push docker.io/elchen8923/train-schedule:$BUILD_NUMBER'
               }	
            }
         }
-    }
 }
