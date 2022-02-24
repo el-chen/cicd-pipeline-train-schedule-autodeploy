@@ -25,6 +25,7 @@ pipeline {
                     sh script: 'docker build --file Dockerfile --tag docker.io/elchen8923/train-schedule:$BUILD_NUMBER .'
                     sh script: 'docker push docker.io/elchen8923/train-schedule:$BUILD_NUMBER'
               }	
+            }
         }
         stage('Deploy the app to prod Kube master') {
            steps {
