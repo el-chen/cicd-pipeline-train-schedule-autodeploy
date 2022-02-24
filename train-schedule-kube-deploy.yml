@@ -15,8 +15,8 @@
     - name: Deploying service
       shell: |
          if [ `kubectl get svc | grep training-schedule  | awk '{print $1}' | wc -l` -gt 0 ]; then
-            echo "app service found, No actions taken"
-            #kubectl delete svc `kubectl get svc | grep training-schedule | awk '{print $1}'`
+            echo "app service found, delete the service"
+            kubectl delete svc `kubectl get svc | grep training-schedule | awk '{print $1}'`
          else
             echo "Creating App Services"
             kubectl expose deployment training-schedule --name training-schedule --type NodePort --port 8080 --target-port 9080
