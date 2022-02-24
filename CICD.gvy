@@ -25,12 +25,11 @@ pipeline {
                     sh script: 'docker build --file Dockerfile --tag docker.io/elchen8923/train-schedule:$BUILD_NUMBER .'
                     sh script: 'docker push docker.io/elchen8923/train-schedule:$BUILD_NUMBER'
               }	
-           }
         }
         stage('Deploy the app to prod Kube master') {
            steps {
               sh 'sudo ansible-playbook --inventory /etc/ansible/hosts train-schedule-kube-deploy.yml --extra-vars "env=prod-kube-master  build=$BUILD_NUMBER"'
            }
-    }
+        }
     }
 }
