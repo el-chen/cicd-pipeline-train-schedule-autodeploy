@@ -1,0 +1,8 @@
+[qa]
+172.31.19.240 ansible_user=devops ansible_ssh_pass=today@1234
+
+[prod]
+172.31.31.187 ansible_user=devops ansible_ssh_pass=today@1234
+
+[prod-kube-master]
+172.31.80.125 ansible_user=devops ansible_ssh_pass=today@1234
