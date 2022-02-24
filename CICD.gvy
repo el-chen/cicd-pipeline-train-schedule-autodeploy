@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Deploy the app to prod Kube master') {
            steps {
-              sh 'sudo ansible-playbook --inventory /etc/ansible/hosts train-schedule-kube-deploy.yml --extra-vars "env=prod-kube-master" build=$BUILD_NUMBER"'
+              sh 'sudo ansible-playbook --inventory /etc/ansible/hosts train-schedule-kube-deploy.yml --extra-vars "env=prod-kube-master  build=$BUILD_NUMBER"'
            }
     }
     }
