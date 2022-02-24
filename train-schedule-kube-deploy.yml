@@ -9,10 +9,10 @@
             echo "creating new application deployment"
             kubectl create deployment training_schedule --image=elchen8923/training-schedule:{{ build }}
          else 
-            echo "Deploying Sampleapp Application"
+            echo "Deploying training-schedule Application"
             kubectl create deployment training-schedule --image=elchen8923/training-schedule:{{ build }}
          fi
-    - name: deploying service
+    - name: Deploying service
       shell: |
          if [ `kubectl get svc | grep training-schedule  | awk '{print $1}' | wc -l` -gt 0 ]; then
             echo "app service found, No actions taken"
@@ -21,10 +21,6 @@
             echo "Creating App Services"
             kubectl expose deployment training-schedule --name training-schedule --type NodePort --port 8080 --target-port 9080
          fi
-    - name: increase replicas 
+    - name: Increase replicas 
       shell: kubectl scale deploy training-schedule --replicas=2
-      
-    #- name: deploy app
-    #  shell: kubectl create deployment training-schedule --image=elchen8923/training-schedule:{{ build }}
-    #- name: deploy service
-    #  shell: kubectl expose deployment sampleapp --name sampleapp --type NodePort --port 8080 --target-port 9080
+ 

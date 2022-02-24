@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE_NAME = "elchen8923/train-schedule"
     }
     stages {
-        stage('checkout the app') {
+        stage('Checkout the app from github') {
             steps {
               echo 'checkout the app..'
               git branch: 'master', url: 'https://github.com/el-chen/cicd-pipeline-train-schedule-autodeploy'
@@ -18,7 +18,7 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage('build & push docker image') {
+        stage('Build & Push docker image') {
             steps {
               withDockerRegistry(credentialsId: 'dockerhub_cred', url: 'https://index.docker.io/v1/') {
                     sh script: 'cd  $WORKSPACE'
@@ -27,5 +27,10 @@ pipeline {
               }	
            }
         }
+        stage('Deploy the app to prod Kube master') {
+           steps {
+              sh 'sudo ansible-playbook --inventory /etc/ansible/hosts train-schedule-kube-deploy.yml --extra-vars "env=prod-kube-master" build=$BUILD_NUMBER"'
+           }
+    }
     }
 }
