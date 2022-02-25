@@ -7,10 +7,10 @@
             echo "deleteing previous application deployment"
             kubectl delete deployment `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep trainings`
             echo "Deploying training_schedule Application"
-            kubectl create deployment trainings --image=elchen8923/training-schedule:{{ build }}
+            kubectl create deployment trainings --image={{ image }}:{{ build }}
          else
             echo "Deploying training_schedule Application"
-            kubectl create deployment trainings --image=elchen8923/training-schedule:{{ build }}
+            kubectl create deployment trainings --image={{ image }}:{{ build }}
          fi
 
     - name: Deploying service
