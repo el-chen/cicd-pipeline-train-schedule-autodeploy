@@ -3,10 +3,12 @@
   tasks: 
     - name: Deploying Application pods...
       shell: | 
-          if [ `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep trainings | wc -l` -gt 0 ]; then  
+         if [ `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep trainings | wc -l` -gt 0 ]; then  
             echo "deleteing previous application deployment"
             kubectl delete deployment `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep trainings`
-         else 
+            echo "Deploying training_schedule Application"
+            kubectl create deployment trainings --image=elchen8923/training-schedule:{{ build }}
+         else
             echo "Deploying training_schedule Application"
             kubectl create deployment trainings --image=elchen8923/training-schedule:{{ build }}
          fi
@@ -16,6 +18,8 @@
          if [ `kubectl get svc | grep trainings  | awk '{print $1}' | wc -l` -gt 0 ]; then
             echo "app service found, delete the service"
             kubectl delete svc `kubectl get svc | grep trainings | awk '{print $1}'`
+            echo "Creating App Services"
+            kubectl expose deployment trainings --name trainings --type NodePort --port 8080 --target-port 30001
          else
             echo "Creating App Services"
             kubectl expose deployment trainings --name trainings --type NodePort --port 8080 --target-port 30001
