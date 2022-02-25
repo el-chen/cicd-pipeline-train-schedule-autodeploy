@@ -14,4 +14,4 @@ You can run the app with:
 
 Once it is running, you can access it in a browser at http://localhost:8080
 
-train-schedule-kube-deploy.yml and CICD.gvy are the files added
+train-schedule-kube-deploy.yml and CICD.gvy are the files used!
