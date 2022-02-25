@@ -19,10 +19,10 @@
             echo "app service found, delete the service"
             kubectl delete svc `kubectl get svc | grep trainings | awk '{print $1}'`
             echo "Creating App Services"
-            kubectl expose deployment trainings --name trainings --type NodePort --port 8080 --target-port 30001
+            kubectl expose deployment trainings --name=trainings --port=8080 --target-port=8080 --type=NodePort  --overrides '{ "apiVersion": "v1","spec":{"ports":[{"port":8080,"protocol":"TCP","targetPort":8080,"nodePort":30001}]}}'
          else
             echo "Creating App Services"
-            kubectl expose deployment trainings --name trainings --type NodePort --port 8080 --target-port 30001
+            kubectl expose deployment trainings --name=trainings --port=8080 --target-port=8080 --type=NodePort  --overrides '{ "apiVersion": "v1","spec":{"ports":[{"port":8080,"protocol":"TCP","targetPort":8080,"nodePort":30001}]}}'
          fi
 
     - name: Increase replicas 
